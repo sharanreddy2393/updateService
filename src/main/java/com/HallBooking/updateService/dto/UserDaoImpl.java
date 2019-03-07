@@ -18,6 +18,5 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public void SaveUserInformationDao(UserInfromation userInfo) {
 		entityManager.persist(userInfo);
-		
 	}
 }

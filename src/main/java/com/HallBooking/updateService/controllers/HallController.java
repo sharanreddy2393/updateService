@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.HallBooking.common.Entity.HallInformation;
-import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.service.HallService;
 
 @RestController
