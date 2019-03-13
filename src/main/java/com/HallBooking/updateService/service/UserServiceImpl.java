@@ -3,6 +3,7 @@ package com.HallBooking.updateService.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.HallBooking.common.DTO.UserRequest;
 import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.dto.UserDao;
 
@@ -13,8 +14,13 @@ public class UserServiceImpl implements UserService{
 	UserDao userDao;
 
 	@Override
-	public void SaveUserInformation(UserInfromation userInfo) {
+	public void SaveUserInformation(UserRequest userInfo) {
 		userDao.SaveUserInformationDao(userInfo);
+	}
+
+	@Override
+	public void SaveUserProfilePicture(String profilePic, String email) {
+		userDao.SaveUserProfilePicture(profilePic,email);
 	}
 
 }

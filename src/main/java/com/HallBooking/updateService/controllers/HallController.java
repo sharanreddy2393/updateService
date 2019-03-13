@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.HallBooking.common.DTO.HallRequest;
 import com.HallBooking.common.Entity.HallInformation;
 import com.HallBooking.updateService.service.HallService;
 
@@ -21,7 +22,7 @@ public class HallController {
 	RestTemplate restTemplate;
 	
 	@RequestMapping(value="/savehall",method=RequestMethod.POST)
-	public ResponseEntity<?> SaveHallInformation(@RequestBody HallInformation hallInfo) {	
+	public ResponseEntity<?> SaveHallInformation(@RequestBody HallRequest hallInfo) {	
 		restTemplate = new RestTemplate();
 		HallInformation hInfo= restTemplate.getForObject("http://localhost:8099/getHallInfo/"+hallInfo.getMuncipalRegistration(), HallInformation.class);
 		if(hInfo == null)
