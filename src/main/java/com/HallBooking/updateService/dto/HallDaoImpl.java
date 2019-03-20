@@ -6,8 +6,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.HallBooking.common.DTO.BookingInformationDTO;
 import com.HallBooking.common.DTO.HallRequest;
+import com.HallBooking.common.Entity.BookingInformation;
 import com.HallBooking.common.Entity.HallInformation;
+import com.HallBooking.common.Entity.UserInfromation;
 
 @Repository
 @Transactional
@@ -16,7 +19,8 @@ public class HallDaoImpl implements HallDao{
 	@Autowired
 	EntityManager entityManager;
 
-	HallInformation hall;
+	private HallInformation hall;
+	private BookingInformation info;
 	
 	@Override
 	public void SaveHallInfromation(HallRequest hallInfo) {
@@ -39,5 +43,25 @@ public class HallDaoImpl implements HallDao{
 		hall.setHallAvailability(hallInfo.getHallAvailability());
 		hall.setHallCapacity(hallInfo.getHallCapacity());
 		return hall;
+	}
+
+	@Override
+	public void BookingHall(BookingInformationDTO bookingInfo) {
+		entityManager.persist(MapBookingInformation(bookingInfo));
+	}
+
+	private BookingInformation MapBookingInformation(BookingInformationDTO bookingInfo) {
+		info = new BookingInformation();
+		info.setAdvanceAmount(bookingInfo.getAdvanceAmount());
+		info.setFromDate(bookingInfo.getFromDate());
+		info.setToDate(bookingInfo.getToDate());
+		info.setNumOfDays(bookingInfo.getNumOfDays());
+		UserInfromation uinfo= new UserInfromation();
+		uinfo.setUserId(bookingInfo.getUserId());
+		info.setUserId(uinfo);
+		HallInformation hinfo = new HallInformation();
+		hinfo.setHallId(bookingInfo.getHallId());
+		info.setHallId(hinfo);
+		return info;
 	}
 }
