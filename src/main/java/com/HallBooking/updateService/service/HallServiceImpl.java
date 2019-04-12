@@ -1,5 +1,8 @@
 package com.HallBooking.updateService.service;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +27,10 @@ public class HallServiceImpl implements HallService{
 	public void BookingHall(BookingInformationDTO bookingInfo) {
 		hallDao.BookingHall(bookingInfo);
 		
+	}
+
+	@Override
+	public List<HallInformation> GetHallInformationSearchByDate(Date StartDate, Date endDate) {
+		 return hallDao.GetHallInformationSearchByDate(StartDate, endDate);
 	}
 }

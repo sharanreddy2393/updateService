@@ -1,6 +1,10 @@
 package com.HallBooking.updateService.dto;
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +57,8 @@ public class HallDaoImpl implements HallDao{
 	private BookingInformation MapBookingInformation(BookingInformationDTO bookingInfo) {
 		info = new BookingInformation();
 		info.setAdvanceAmount(bookingInfo.getAdvanceAmount());
-		info.setFromDate(bookingInfo.getFromDate());
-		info.setToDate(bookingInfo.getToDate());
+		info.setFromDate(new java.sql.Date( bookingInfo.getFromDate().getTime()));
+		info.setToDate( new java.sql.Date(bookingInfo.getToDate().getTime()));
 		info.setNumOfDays(bookingInfo.getNumOfDays());
 		UserInfromation uinfo= new UserInfromation();
 		uinfo.setUserId(bookingInfo.getUserId());
@@ -63,5 +67,23 @@ public class HallDaoImpl implements HallDao{
 		hinfo.setHallId(bookingInfo.getHallId());
 		info.setHallId(hinfo);
 		return info;
+	}
+
+	
+	@Override
+	public List<HallInformation> GetHallInformationSearchByDate(Date fromdate, Date todate) {
+		Query q=  entityManager.createNativeQuery("select * from hall_information h "
+				+ "where h.hallid != (select hallid from booking_information b where ((b.fromdate=:fromdate"
+				+ " and b.todate=:todate) or\r\n" + 
+				"(b.fromdate = :fromdate or b.todate= :todate) "
+				+ " or ( b.fromdate =:fromdate or b.todate= :todate) or\r\n" + 
+				"( b.fromdate between :fromdate and :todate) "
+				+ "or ( b.todate between :fromdate and :todate) ))");
+		
+		q.setParameter("fromdate", fromdate);
+		q.setParameter("todate", todate);
+		List<HallInformation> hallInfo = q.getResultList();
+		return hallInfo;
+		
 	}
 }

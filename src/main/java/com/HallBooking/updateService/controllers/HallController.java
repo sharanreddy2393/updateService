@@ -2,6 +2,7 @@ package com.HallBooking.updateService.controllers;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,4 +48,8 @@ public class HallController {
 		 return new ResponseEntity<HallInformation>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/getHallDetailsbyDate")
+	public List<HallInformation> GetHallInformationsSearcgByDate(@RequestParam Date startDate,@RequestParam Date endDate) {
+		return hallService.GetHallInformationSearchByDate(startDate, endDate);
+	}
 }
