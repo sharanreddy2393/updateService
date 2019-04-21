@@ -17,13 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.amazonS3client.AmazonClient;
 import com.HallBooking.updateService.service.UserService;
+import com.HallBooking.updateService.sor.UserInfoService;
 
 @RestController
 public class UserController {
 
 	@Autowired
 	UserService userService;
-
+	@Autowired
+    private UserInfoService userInfoService;
 	RestTemplate restTemplate;
 	
 	private AmazonClient amazonClient;
@@ -35,9 +37,10 @@ public class UserController {
 	@RequestMapping(value = "/saveuser", method = RequestMethod.POST)
 	public ResponseEntity<UserInfromation> saveUser(@RequestBody UserInfromation userInfo) {
 		restTemplate = new RestTemplate();
-		UserInfromation info = restTemplate.getForObject(
-				"http://localhost:8099/getuserbyemail/" + userInfo.getEmail() +"/"+ userInfo.getPhoneNumber(),
-				UserInfromation.class);
+		//UserInfromation info = restTemplate.getForObject(
+				//"http://localhost:8099/getuserbyemail/" + userInfo.getEmail() +"/"+ userInfo.getPhoneNumber(),
+			//	UserInfromation.class);
+		UserInfromation info = userInfoService.getUserbyEmail(userInfo.getEmail(), userInfo.getPhoneNumber());
 		if (info == null) {
 			userService.SaveUserInformation(userInfo);
 			return new ResponseEntity<UserInfromation>(HttpStatus.OK);
