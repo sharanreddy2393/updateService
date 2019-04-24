@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.HallBooking.common.DTO.BookingInformationDTO;
 import com.HallBooking.common.DTO.HallRequest;
-import com.HallBooking.common.Entity.BookingInformation;
 import com.HallBooking.common.Entity.HallInformation;
 import com.HallBooking.updateService.dto.HallDao;
 

@@ -1,6 +1,5 @@
 package com.HallBooking.updateService.controllers;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -16,9 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.HallBooking.common.DTO.BookingInformationDTO;
 import com.HallBooking.common.DTO.HallRequest;
-import com.HallBooking.common.Entity.BookingInformation;
 import com.HallBooking.common.Entity.HallInformation;
-import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.service.HallService;
 
 @RestController

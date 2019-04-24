@@ -82,6 +82,7 @@ public class HallDaoImpl implements HallDao{
 		
 		q.setParameter("fromdate", fromdate);
 		q.setParameter("todate", todate);
+		@SuppressWarnings("unchecked")
 		List<HallInformation> hallInfo = q.getResultList();
 		return hallInfo;
 		

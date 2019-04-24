@@ -1,7 +1,6 @@
 package com.HallBooking.updateService.dto;
 
 import com.HallBooking.common.DTO.UserRequest;
-import com.HallBooking.common.Entity.UserInfromation;
 
 public interface UserDao {
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.HallBooking.common.DTO.UserRequest;
-import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.dto.UserDao;
 
 @Service
