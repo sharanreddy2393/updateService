@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.HallBooking.common.DTO.UserRequest;
 import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.amazonS3client.AmazonClient;
 import com.HallBooking.updateService.service.UserService;
@@ -35,7 +36,7 @@ public class UserController {
         this.amazonClient = amazonClient;
     }
 	@RequestMapping(value = "/saveuser", method = RequestMethod.POST)
-	public ResponseEntity<UserInfromation> saveUser(@RequestBody UserInfromation userInfo) {
+	public ResponseEntity<UserInfromation> saveUser(@RequestBody UserRequest userInfo) {
 		restTemplate = new RestTemplate();
 		//UserInfromation info = restTemplate.getForObject(
 				//"http://localhost:8099/getuserbyemail/" + userInfo.getEmail() +"/"+ userInfo.getPhoneNumber(),
@@ -47,9 +48,11 @@ public class UserController {
 		} else
 			return new ResponseEntity<UserInfromation>(HttpStatus.CONFLICT);
 	}
-    @PostMapping("/uploadFile")
+    
+	@PostMapping("/uploadfile")
     public String uploadFile(@RequestPart(value = "file") MultipartFile file,@RequestParam(value = "email") String emailId) {
         String profilePicUrl = amazonClient.uploadFile(file,emailId);
+        userService.SaveUserProfilePicture(profilePicUrl, emailId);
         return "successfully uploaded";
     }
 }
