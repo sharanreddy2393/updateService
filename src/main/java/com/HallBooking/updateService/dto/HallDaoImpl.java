@@ -16,6 +16,7 @@ import com.HallBooking.common.Entity.BookingInformation;
 import com.HallBooking.common.Entity.HallInformation;
 import com.HallBooking.common.Entity.UserInfromation;
 import com.HallBooking.updateService.mapper.HallInformationMapper;
+import com.HallBooking.updateService.mapper.HallInformationMapperImpl;
 
 @Repository
 @Transactional
@@ -24,7 +25,7 @@ public class HallDaoImpl implements HallDao{
 	@Autowired
 	EntityManager entityManager;
 
-	HallInformationMapper mapper;
+	HallInformationMapper mapper = new HallInformationMapperImpl();
 	
 	private HallInformation hallDetails;
 	private BookingInformation BookingDetails;

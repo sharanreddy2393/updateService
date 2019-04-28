@@ -4,6 +4,7 @@ import com.HallBooking.common.DTO.BookingInformationDTO;
 import com.HallBooking.common.DTO.HallRequest;
 import com.HallBooking.common.Entity.BookingInformation;
 import com.HallBooking.common.Entity.HallInformation;
+import com.HallBooking.common.Entity.OwnerInformation;
 import com.HallBooking.common.Entity.UserInfromation;
 
 public class HallInformationMapperImpl implements HallInformationMapper{
@@ -27,6 +28,9 @@ public class HallInformationMapperImpl implements HallInformationMapper{
 		hall.setFullAmount(hallInfo.getFullAmount());
 		hall.setHallAvailability(hallInfo.getHallAvailability());
 		hall.setHallCapacity(hallInfo.getHallCapacity());
+		OwnerInformation oinfo = new OwnerInformation();
+		oinfo.setOwnerId(hallInfo.getOwnerid());
+		hall.setOwnerid(oinfo);
 		return hall;
 	}
 
