@@ -17,6 +17,7 @@ import com.HallBooking.common.DTO.BookingInformationDTO;
 import com.HallBooking.common.DTO.HallRequest;
 import com.HallBooking.common.Entity.HallInformation;
 import com.HallBooking.updateService.service.HallService;
+import com.HallBooking.updateService.sor.UtilizationInformation;
 
 @RestController
 public class HallController {
@@ -24,12 +25,12 @@ public class HallController {
 	@Autowired
 	HallService hallService;
 	
-	RestTemplate restTemplate;
-	
+	@Autowired
+    private UtilizationInformation utiliationInfo;
+		
 	@RequestMapping(value="/savehall",method=RequestMethod.POST)
 	public ResponseEntity<?> SaveHallInformation(@RequestBody HallRequest hallInfo) {	
-		restTemplate = new RestTemplate();
-		HallInformation hInfo= restTemplate.getForObject("http://localhost:8099/getHallInfo/"+hallInfo.getMuncipalRegistration(), HallInformation.class);
+		HallInformation hInfo = utiliationInfo.GetHallDetails(hallInfo.getMuncipalRegistration());	
 		if(hInfo == null)
 		{
 		hallService.SaveHallInfromation(hallInfo);

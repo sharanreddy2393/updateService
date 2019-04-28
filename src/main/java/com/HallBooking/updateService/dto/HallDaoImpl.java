@@ -15,6 +15,7 @@ import com.HallBooking.common.DTO.HallRequest;
 import com.HallBooking.common.Entity.BookingInformation;
 import com.HallBooking.common.Entity.HallInformation;
 import com.HallBooking.common.Entity.UserInfromation;
+import com.HallBooking.updateService.mapper.HallInformationMapper;
 
 @Repository
 @Transactional
@@ -23,52 +24,23 @@ public class HallDaoImpl implements HallDao{
 	@Autowired
 	EntityManager entityManager;
 
-	private HallInformation hall;
-	private BookingInformation info;
+	HallInformationMapper mapper;
+	
+	private HallInformation hallDetails;
+	private BookingInformation BookingDetails;
 	
 	@Override
 	public void SaveHallInfromation(HallRequest hallInfo) {
-		entityManager.persist(mapHallInformation(hallInfo));
+		hallDetails = mapper.mapHallInformation(hallInfo);
+		entityManager.persist(hallDetails);
 	}
 	
-	public HallInformation mapHallInformation(HallRequest hallInfo) {
-		hall= new HallInformation();
-		hall.setHallName(hallInfo.getHallName());
-		hall.setMuncipalRegistration(hallInfo.getMuncipalRegistration());
-		hall.setHallDescription(hallInfo.getHallDescription());
-		hall.setLocality(hallInfo.getLocality());
-		hall.setCity(hallInfo.getCity());
-		hall.setLandmark(hallInfo.getLandmark());
-		hall.setState(hallInfo.getState());
-		hall.setCountry(hallInfo.getCountry());
-		hall.setPincode(hallInfo.getPincode());
-		hall.setAdvanceAmount(hallInfo.getAdvanceAmount());
-		hall.setFullAmount(hallInfo.getFullAmount());
-		hall.setHallAvailability(hallInfo.getHallAvailability());
-		hall.setHallCapacity(hallInfo.getHallCapacity());
-		return hall;
-	}
-
+	
 	@Override
 	public void BookingHall(BookingInformationDTO bookingInfo) {
-		entityManager.persist(MapBookingInformation(bookingInfo));
+		BookingDetails= mapper.MapBookingInformation(bookingInfo);
+		entityManager.persist(BookingDetails);
 	}
-
-	private BookingInformation MapBookingInformation(BookingInformationDTO bookingInfo) {
-		info = new BookingInformation();
-		info.setAdvanceAmount(bookingInfo.getAdvanceAmount());
-		info.setFromDate(new java.sql.Date( bookingInfo.getFromDate().getTime()));
-		info.setToDate( new java.sql.Date(bookingInfo.getToDate().getTime()));
-		info.setNumOfDays(bookingInfo.getNumOfDays());
-		UserInfromation uinfo= new UserInfromation();
-		uinfo.setUserId(bookingInfo.getUserId());
-		info.setUserId(uinfo);
-		HallInformation hinfo = new HallInformation();
-		hinfo.setHallId(bookingInfo.getHallId());
-		info.setHallId(hinfo);
-		return info;
-	}
-
 	
 	@Override
 	public List<HallInformation> GetHallInformationSearchByDate(Date fromdate, Date todate) {
